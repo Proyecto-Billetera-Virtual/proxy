@@ -1,10 +1,17 @@
 // 1. IMPORTACIONES
 import express = require('express');
 import type { Request, Response } from 'express';
+require ('dotenv'); 
+require ('cors');
+
+// Carga el archivo .env en process.env
+require('dotenv').config();
 
 // 2. INSTANCIA DE LA APLICACIÓN
 const app = express();
-const PORT = 8080;
+const cors = require('cors');
+app.use(cors());
+const PORT = process.env.PORT || 8080;
 
 // 3. MIDDLEWARE (CAPA INTERMEDIA)
 app.use(express.json());
