@@ -18,7 +18,13 @@ const URL_PASARELA = process.env.URL_PASARELA || 'http://localhost:3001';
 app.use(express.json());
 app.use('/api', proxy(URL_BACKEND));
 app.use('/pasarela', proxy(URL_PASARELA));
+app.use('/api/interno', proxy(URL_BACKEND)); // canal interno para backend y pasarela
 
+// Middleware para manejar logs
+app.use((req: Request, res: Response, next: any) => {
+    console.log(`[${new Date().toLocaleTimeString()}] Petición recibida: ${req.method} ${req.url}`);
+    next(); // Crucial para que la petición no se quede colgada
+});
 
 // 4. CONFIGURACIÓN DE UNA RUTA (ENDPOINT DE PRUEBA)
 app.get('/health', (req: Request, res: Response) => {
