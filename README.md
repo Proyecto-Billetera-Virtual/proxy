@@ -1,23 +1,40 @@
 # Proxy
 
+## Requisitos
+
+- **Docker** y **Docker Compose** instalados.
+
+### Instalar Docker
+
+| Sistema | Comando / instrucción |
+|---|---|
+| **Linux (Debian/Ubuntu)** | `sudo apt install docker.io docker-compose-v2 && sudo systemctl enable --now docker` |
+| **Linux (Arch)** | `sudo pacman -S docker docker-compose` |
+| **macOS** | Descargar e instalar [Docker Desktop](https://www.docker.com/products/docker-desktop/) |
+| **Windows** | Descargar e instalar [Docker Desktop](https://www.docker.com/products/docker-desktop/) |
+
+Verificar con `docker --version`.
+
 ## Docker
 
-### Construir la imagen
+### Construir
 ```bash
 docker build -t billetera-proxy .
 ```
 
-### Ejecutar en una PC de la LAN
+### Ejecutar
 ```bash
 docker rm -f proxy 2>/dev/null
 docker run -d --name proxy \
-  -e URL_BACKEND=http://<IP_DEL_BACKEND>:5000 \
-  -e URL_PASARELA=http://<IP_DE_PASARELA>:6000 \
+  -e URL_BACKEND=http://IP_DEL_BACKEND:5000 \
+  -e URL_PASARELA=http://IP_DE_PASARELA:6000 \
   -p 8080:8080 \
   billetera-proxy
 ```
 
-Reemplazar `<IP_DEL_BACKEND>` e `<IP_DE_PASARELA>` por las IPs de las PCs donde corren esos servicios.
+Reemplazar `IP_DEL_BACKEND` e `IP_DE_PASARELA` por las IPs donde corren esos servicios. Si todo corre en la misma PC, usar `localhost`.
+
+Para probar todo local, usá `./start.sh` en la raíz del proyecto.
 
 ### Variables de entorno
 | Variable | Descripción | Default |
